@@ -1,22 +1,23 @@
 services:
+
   app:
     build: .
-    container_name: sit725-app
+    container_name: sit753-app
     ports:
       - "3000:3000"
     environment:
       PORT: 3000
-      MONGODB_URI: mongodb://mongo:27017/sit725-group-88
+      MONGODB_URI: mongodb://mongo:27017/sit753-devops
     depends_on:
       - mongo
 
   mongo:
     image: mongo:7
-    container_name: sit725-mongo
+    container_name: sit753-mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - sit753_mongo_data:/data/db
 
 volumes:
-  mongo_data:
+  sit753_mongo_data:
