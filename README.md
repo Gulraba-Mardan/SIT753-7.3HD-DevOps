@@ -141,11 +141,17 @@ The pipeline is defined as code in the `Jenkinsfile` and retrieves the latest so
 
 The pipeline contains the following stages:
 
+The pipeline contains the following stages:
+
 1. **Checkout** - Retrieves the latest source code from the GitHub repository.
 2. **Install Dependencies** - Installs the required Node.js dependencies using `npm ci`.
-3. **Lint** - Performs static code analysis using ESLint with `npx eslint .`.
-4. **Test** - Runs the automated test suite using `npm test`.
-5. **Docker Build** - Builds the application container using `docker compose build`.
+3. **Lint** - Performs static code analysis using ESLint.
+4. **Security** - Performs dependency vulnerability scanning using `npm audit --audit-level=high`.
+5. **Test** - Runs the automated test suite using `npm test`.
+6. **Docker Build** - Builds the application image using Docker Compose.
+7. **Deploy** - Automatically starts the application and MongoDB services using Docker Compose.
+8. **Release** - Creates a versioned Docker image tagged with the Jenkins build number for traceability.
+9. **Monitoring** - Performs a post-deployment HTTP health check and verifies that the Docker services remain operational.
 
 The pipeline follows a fail-fast approach. If linting, automated testing, or the Docker build fails, Jenkins stops the pipeline and reports the failed stage. This helps prevent code that does not meet the required quality checks from progressing further through the pipeline.
 
@@ -159,3 +165,12 @@ To run the static analysis manually:
 
 ```bash
 npx eslint .
+
+
+## Pipeline Verification
+
+The final Jenkins pipeline was successfully executed with all stages passing:
+
+`Checkout -> Install Dependencies -> Lint -> Security -> Test -> Docker Build -> Deploy -> Release -> Monitoring`
+
+The successful pipeline demonstrates automated code quality analysis, dependency security scanning, automated testing, container building, deployment, versioned release creation, and post-deployment health monitoring.
