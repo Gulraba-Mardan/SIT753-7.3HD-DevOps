@@ -132,3 +132,30 @@ Returns all lost and found reports stored in MongoDB.
 
 POST /api/items  
 Creates and stores a new lost or found report in MongoDB.
+
+## CI/CD Pipeline with Jenkins
+
+A Jenkins CI pipeline has been implemented to automate code quality checking, testing, and Docker image building.
+
+The pipeline is defined as code in the `Jenkinsfile` and retrieves the latest source code from the GitHub repository.
+
+The pipeline contains the following stages:
+
+1. **Checkout** - Retrieves the latest source code from the GitHub repository.
+2. **Install Dependencies** - Installs the required Node.js dependencies using `npm ci`.
+3. **Lint** - Performs static code analysis using ESLint with `npx eslint .`.
+4. **Test** - Runs the automated test suite using `npm test`.
+5. **Docker Build** - Builds the application container using `docker compose build`.
+
+The pipeline follows a fail-fast approach. If linting, automated testing, or the Docker build fails, Jenkins stops the pipeline and reports the failed stage. This helps prevent code that does not meet the required quality checks from progressing further through the pipeline.
+
+## Static Code Analysis
+
+ESLint is integrated into the project to automatically check JavaScript source code for syntax and code-quality issues.
+
+The ESLint configuration distinguishes between Node.js server-side files and browser-side JavaScript files so that the appropriate global environments are applied.
+
+To run the static analysis manually:
+
+```bash
+npx eslint .
