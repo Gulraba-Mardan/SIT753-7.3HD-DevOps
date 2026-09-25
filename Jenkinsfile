@@ -56,5 +56,13 @@ pipeline {
                 sh 'docker image ls sit753-73hd-devops-app'
             }
         }
+
+        stage('Monitoring') {
+            steps {
+                sh 'sleep 5'
+                sh 'curl --fail http://localhost:3000/api/student'
+                sh 'docker compose ps'
+            }
+        }
     }
 }
