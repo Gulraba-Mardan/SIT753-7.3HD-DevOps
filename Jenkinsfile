@@ -18,6 +18,12 @@ pipeline {
             }
         }
 
+        stage('Lint') {
+            steps {
+                sh 'npx eslint .'
+            }
+        }
+
         stage('Test') {
             steps {
                 sh 'npm test'

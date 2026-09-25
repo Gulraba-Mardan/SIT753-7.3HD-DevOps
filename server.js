@@ -84,7 +84,7 @@ app.get("/api/items", async (req, res) => {
     }));
 
     res.json(formattedItems);
-  } catch (error) {
+    } catch {
     res.status(500).json({
       message: "Unable to load reports.",
     });
@@ -124,7 +124,7 @@ app.post("/api/items", async (req, res) => {
         status: newItem.status,
       },
     });
-  } catch (error) {
+  } catch {
     res.status(500).json({
       message: "Unable to create report.",
     });
