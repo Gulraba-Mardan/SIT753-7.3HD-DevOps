@@ -24,6 +24,12 @@ pipeline {
             }
         }
 
+        stage('Security') {
+            steps {
+                sh 'npm audit --audit-level=high'
+            }
+        }
+
         stage('Test') {
             steps {
                 sh 'npm test'
