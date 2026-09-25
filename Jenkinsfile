@@ -49,5 +49,12 @@ pipeline {
                 sh 'docker compose ps'
             }
         }
+
+        stage('Release') {
+            steps {
+                sh 'docker image tag sit753-73hd-devops-app:latest sit753-73hd-devops-app:build-${BUILD_NUMBER}'
+                sh 'docker image ls sit753-73hd-devops-app'
+            }
+        }
     }
 }
