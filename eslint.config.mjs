@@ -17,6 +17,16 @@ export default defineConfig([
     }
   },
   {
+    files: ["test/**/*.js"],
+    languageOptions: {
+      sourceType: "commonjs",
+      globals: {
+        ...globals.node,
+        ...globals.mocha
+      }
+    }
+  },
+  {
     files: ["public/js/**/*.js"],
     languageOptions: {
       globals: globals.browser
