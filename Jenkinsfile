@@ -81,12 +81,31 @@ pipeline {
             }
         }
 
-        stage('Release') {
-            steps {
-                sh 'docker image tag sit753-73hd-devops-app:latest sit753-73hd-devops-app:build-${BUILD_NUMBER}'
-                sh 'docker image ls sit753-73hd-devops-app'
-            }
-        }
+        
+stage('Release') {
+    steps {
+        sh '''
+            set -e
+
+            IMAGE_TAG="build-${BUILD_NUMBER}"
+
+            docker image tag \
+              sit753-73hd-devops-app:latest \
+              sit753-73hd-devops-app:${IMAGE_TAG}
+
+            IMAGE_TAG=${IMAGE_TAG} docker compose \
+              -p sit753-production \
+              -f docker-compose.prod.yml up -d
+
+            curl --fail --retry 10 --retry-delay 3 \
+              --retry-connrefused \
+              http://localhost:3002/api/student
+
+            git tag -f "v1.0.${BUILD_NUMBER}"
+        '''
+    }
+}
+
 
         stage('Monitoring') {
             steps {
