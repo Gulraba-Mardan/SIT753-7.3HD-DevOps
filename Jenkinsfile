@@ -59,10 +59,12 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'npm test'
-            }
+       stage('Test') {
+    steps {
+        withEnv(['MONGODB_URI=mongodb://127.0.0.1:27017/sit753-devops-jenkins-test']) {
+            sh 'npm test'
+          }
+         }
         }
 
         stage('Docker Build') {
