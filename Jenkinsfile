@@ -97,8 +97,7 @@ stage('Release') {
               -p sit753-production \
               -f docker-compose.prod.yml up -d
 
-            sh 'curl --fail --retry 20 --retry-delay 3 --retry-connrefused --retry-all-errors http://localhost:3002/api/student'
-
+            curl --fail --retry 20 --retry-delay 3 --retry-connrefused --retry-all-errors http://localhost:3002/api/student
             git tag -f "v1.0.${BUILD_NUMBER}"
         '''
     }
