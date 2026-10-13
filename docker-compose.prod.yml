@@ -1,0 +1,20 @@
+
+services:
+  app:
+    image: sit753-73hd-devops-app:${IMAGE_TAG:-latest}
+    ports:
+      - "3002:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/sit753-production
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - sit753_prod_mongo_data:/data/db
+
+volumes:
+  sit753_prod_mongo_data:
